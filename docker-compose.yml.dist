@@ -1,0 +1,105 @@
+# Docker and Docker Compose based environment for Drupal.
+# See https://github.com/blinkreaction/drude for more information and documentation.
+
+# Web node
+web:
+  hostname: web
+  image: blinkreaction/drupal-apache:2.2-stable
+  ports:
+    - "80"
+    - "443"
+    # Use IP based mapping when working with multiple projects. See docs (^^) for more details.
+    #- 192.168.10.10:80:80
+    #- 192.168.10.10:443:443
+  volumes:
+    # Project root folder mapping
+    - &project_root ".:/var/www"
+  links:
+    - cli
+  environment:
+    - DOCROOT=/var/www/docroot
+    - VIRTUAL_HOST=drupal8.drude
+
+# DB node
+db:
+  hostname: db
+  image: blinkreaction/drupal-mysql:5.5
+  ports:
+    - "3306"
+    # Use IP based mapping when working with multiple projects. See docs (^^) for more details.
+    #- 192.168.10.10:3306:3306
+  # DB configuration
+  environment:
+    - MYSQL_ROOT_PASSWORD=admin123
+    - MYSQL_USER=drupal
+    - MYSQL_PASSWORD=123
+    - MYSQL_DATABASE=drupal
+  #volumes:
+     # MySQL configuration overrides
+     #- "./.drude/etc/mysql/my.cnf:/opt/my.cnf.d/z_my.cnf"
+
+# CLI node
+# Used for all console commands and tools.
+cli:
+  hostname: cli
+  image: blinkreaction/drupal-cli:stable
+  volumes:
+    # Project root folder mapping
+    - *project_root
+    # PHP FPM configuration overrides
+    - "./.drude/etc/php5/php.ini:/etc/php5/fpm/conf.d/z_php.ini"
+    # PHP CLI configuration overrides
+    - "./.drude/etc/php5/php-cli.ini:/etc/php5/cli/conf.d/z_php.ini"
+    # Host home directory mapping (for SSH keys and ther credentials).
+    # We try to map both options (b2d and Linux). The startup.sh script in cli container will decide which one to use.
+    - /.home:/.home-b2d  # boot2docker-vagrant
+    - ~:/.home-linux   # Linux
+  links:
+    - db
+  environment:
+    # Optional. Specify a custom SSH RSA key name if necessary. Defaults to 'id_rsa'.
+    - SSH_KEY_NAME=id_rsa
+
+# Memcached node
+# Uncomment the service definition section below to start using memcached.
+# memcached:
+#   hostname: memcached
+#   image: memcached
+#   environment:
+#     # Memcached memory limit in megabytes
+#     - MEMCACHED_MEMORY_LIMIT=128
+#     - DOMAIN_NAME=drupal8.memcached.docker
+
+# ngrok node
+# Uncomment the service definition section below to start using ngrok for sharing your local web server with the world.
+# share:
+#   hostname: share
+#   image: fnichol/ngrok
+#   ports:
+#     - "4040"
+#     # Use IP based mapping when working with multiple projects. See docs (^^) for more details.
+#     #- 192.168.10.10:4040:4040
+#   links:
+#     - web:http
+
+# Selenium2 node
+# Uncomment the service definition section below to start using selenium2 driver for Behat tests requiring JS support.
+# browser:
+#   hostname: browser
+#   image: selenium/standalone-chrome
+#   ports:
+#     - "4444"
+#   environment:
+#     - DOMAIN_NAME=drupal8.browser.docker
+
+# Solr node
+# Uncomment the service definition section below to start using Solr.
+# solr:
+#   hostname: solr
+#   image: blinkreaction/drupal-solr:3.x-stable
+#   # Mapping for custom Solr configuration.
+#   # See https://github.com/blinkreaction/docker-drupal-solr/tree/master/solr3.x/solr/conf for the default one.
+#   #volumes:
+#   #  - "./.drude/etc/solr:/var/lib/solr/conf"
+#   environment:
+#     - DOMAIN_NAME=drupal8.solr.docker
