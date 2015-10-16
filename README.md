@@ -1,9 +1,8 @@
-# Drude Testing
+# Drude Drupal 8 Testing
 
 This is a sample vanila Drupal 8 installation preconfigured for use with Drude.  
-Sample Behat tests also included.
 
-## Instructions (Mac and Windows)
+## Instructions (Mac, Windows, Linux)
 
 **On Windows** you will need a Linux-type shell. Install [Babun](http://babun.github.io/) before proceeding and run all commands in it.  
 Instructions were not tested with other shells on Windows.
@@ -17,48 +16,48 @@ Instructions were not tested with other shells on Windows.
 
 2. Create the `<Projects>` directory
     
+    E.g. `~/Projects` on Mac and Linux, `c:\Projects` on Windows
+    
     ```
     mkdir Projects
     cd Projects
     ```
 
-3. Install Drude's prerequisites (vagrant, virtualbox, boot2docker-vagrant)
+3. Install Drude's prerequisites
+    
+    Mac and Windows: virtualbox, vagrant, boot2docker-vagrant
+    Linux: docker, docker-compose
 
     ```
     dsh install prerequisites
     dsh install boot2docker
     ```
-   
+    
 4. Clone this repo into the Projects directory
 
     ```
     git clone https://github.com/blinkreaction/drude-d8-testing.git
-    cd drude-testing
+    cd drude-d8-testing
     ```
 
-5. Set up `settings.local.php` in `sites/default`
- 
+5. Initialize the site
+
+    This will initialize local settigns and install the site via drush
+
     ```
-    cd docroot/sites/default
-    cp example.settings.local.php settings.local.php
+    dsh init
     ```
 
-6. Install Drupal
- 
-    ```
-    dsh drush si -y
-    ```
+6. Add `192.168.10.10  drupal8.drude` to your hosts file
 
-7. Add `192.168.10.10  drupal7.drude` to your hosts file
-
-8. Point your browser to
+7. Point your browser to
 
     ```
     http://drupal8.drude
     ```
 
 
-## More automation with 'dsh init'
+## Automation with 'dsh init'
 
 Site provisioning can be automated using `dsh init`, which calls the shell script in [.drude/scripts/drude-init.sh](.drude/scripts/drude-init.sh).  
 This script is meant to be modified per project. The one in this repo will give you a good starting point.
@@ -71,19 +70,3 @@ Some common tasks that can be handled by the init script:
 - run DB updates, revert features, clear cached, etc.
 - apply local settings (e.g. enable/disable modules, updates variable values)
 - run Behat tests available in the repo
-
-Try it:
-
-    ```
-    dsh init
-    ```
-
-
-## Behat test examples
-
-Behat tests are stored in [tests/behat](tests/behat). To launcht then run: 
-
-    ```
-    dsh behat
-    ```
-
