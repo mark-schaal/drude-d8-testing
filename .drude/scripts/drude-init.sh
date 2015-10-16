@@ -11,9 +11,9 @@ set -e
 PROJECT_ROOT=$(git rev-parse --show-toplevel); if [[ -z $PROJECT_ROOT  ]]; then exit -1; fi
 DOCROOT='docroot'
 DOCROOT_PATH=$PROJECT_ROOT/$DOCROOT
-
 # Set to the appropriate site directory
 SITE_DIRECTORY='default'
+SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
 # Set to the appropriate site domain
 SITE_DOMAIN='drupal8.drude'
 
@@ -69,7 +69,8 @@ init_settings ()
   echo-green "Initializing local project configuration..."
   # Copy from settings templates
   copy_settings_file "${PROJECT_ROOT}/docker-compose.yml.dist" "${PROJECT_ROOT}/docker-compose.yml"
-  copy_settings_file "${DOCROOT_PATH}/sites/${SITE_DIRECTORY}/example.settings.local.php" "${DOCROOT_PATH}/sites/${SITE_DIRECTORY}/settings.local.php"
+  copy_settings_file "${SITEDIR_PATH}/example.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
+  copy_settings_file "${PROJECT_ROOT}/tests/behat/behat.yml.dist" "${PROJECT_ROOT}/tests/behat/behat.yml"
 }
 
 # Set file/folder permissions
