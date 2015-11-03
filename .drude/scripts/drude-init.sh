@@ -70,7 +70,6 @@ init_settings ()
   # Copy from settings templates
   copy_settings_file "${PROJECT_ROOT}/docker-compose.yml.dist" "${PROJECT_ROOT}/docker-compose.yml"
   copy_settings_file "${SITEDIR_PATH}/example.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
-  copy_settings_file "${PROJECT_ROOT}/tests/behat/behat.yml.dist" "${PROJECT_ROOT}/tests/behat/behat.yml"
 }
 
 # Set file/folder permissions
