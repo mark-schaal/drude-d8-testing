@@ -98,7 +98,7 @@ init_settings
 
 dsh reset
 # Give MySQL some time to start
-echo-green "Waiting 5s for MySQL to start..."; sleep 5
+echo-green "Waiting 10s for MySQL to start..."; sleep 10
 
 time site_install
 
