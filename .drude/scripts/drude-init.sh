@@ -44,15 +44,15 @@ if_failed ()
 # @param $2 destination file
 copy_settings_file()
 {
-  local source=${1}
-  local dest=${2}
+    local source=${1}
+    local dest=${2}
 
-  if [[ ! -f $dest ]]; then
-    echo-green "Copying ${dest}..."
-    cp $source $dest
-  else
-    echo-yellow "${dest} already in place."
-  fi
+    if [[ ! -f $dest ]]; then
+        echo-green "Copying ${dest}..."
+        cp $source $dest
+    else
+        echo-yellow "${dest} already in place."
+    fi
 }
 
 #-------------------------- END: Helper functions --------------------------------
@@ -63,26 +63,26 @@ copy_settings_file()
 # Initialize local settings files
 init_settings ()
 {
-  echo-green "Initializing local project configuration..."
-  # Copy from settings templates
-  copy_settings_file "${PROJECT_ROOT}/docker-compose.yml.dist" "${PROJECT_ROOT}/docker-compose.yml"
-  copy_settings_file "${SITEDIR_PATH}/example.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
+    echo-green "Initializing local project configuration..."
+    # Copy from settings templates
+    copy_settings_file "${PROJECT_ROOT}/docker-compose.yml.dist" "${PROJECT_ROOT}/docker-compose.yml"
+    copy_settings_file "${SITEDIR_PATH}/example.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
 }
 
 # Set file/folder permissions
 file_permissions ()
 {
-  echo-green "Setting file/folder permissions..."
-  mkdir -p $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
-  chmod 777 $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
+    echo-green "Setting file/folder permissions..."
+    mkdir -p $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
+    chmod 777 $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
 }
 
 # Install site
 site_install ()
 {
-  echo-green "Installing site..."
-  cd $DOCROOT_PATH && \
-  dsh exec drush8 si -y
+    echo-green "Installing site..."
+    cd $DOCROOT_PATH && \
+    dsh exec drush8 si -y
 }
 
 #-------------------------- END: Functions --------------------------------
