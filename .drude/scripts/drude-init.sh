@@ -5,10 +5,7 @@ set -e
 
 #-------------------------- Settings --------------------------------
 
-# Get project root directory and set docroot
-# We rely on an existing Git repo in the project folder.
-# If there is no git repo, then just initialize an empty one in the project root with `git init`.
-PROJECT_ROOT=$(git rev-parse --show-toplevel); if [[ -z $PROJECT_ROOT  ]]; then exit -1; fi
+# $PROJECT_ROOT is passed from dsh
 DOCROOT='docroot'
 DOCROOT_PATH=$PROJECT_ROOT/$DOCROOT
 # Set to the appropriate site directory
