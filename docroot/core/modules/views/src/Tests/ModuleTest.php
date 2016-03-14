@@ -15,6 +15,7 @@ namespace Drupal\views\Tests;
 use Drupal\views\Plugin\views\filter\Standard;
 use Drupal\views\Views;
 use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Render\FormattableMarkup;
 
 class ModuleTest extends ViewKernelTestBase {
 
@@ -54,7 +55,7 @@ class ModuleTest extends ViewKernelTestBase {
         'field' => $this->randomMachineName(),
       );
       $handler = $this->container->get('plugin.manager.views.' . $type)->getHandler($item);
-      $this->assertEqual('Drupal\views\Plugin\views\\' . $type . '\Broken', get_class($handler), t('Make sure that a broken handler of type: @type are created', array('@type' => $type)));
+      $this->assertEqual('Drupal\views\Plugin\views\\' . $type . '\Broken', get_class($handler), new FormattableMarkup('Make sure that a broken handler of type: @type is created.', ['@type' => $type]));
     }
 
     $views_data = $this->viewsData();
@@ -274,20 +275,28 @@ class ModuleTest extends ViewKernelTestBase {
   public function testViewsEmbedView() {
     $this->enableModules(array('user'));
 
+    /** @var \Drupal\Core\Render\RendererInterface $renderer */
+    $renderer = \Drupal::service('renderer');
+
     $result = views_embed_view('test_argument');
-    $this->assertEqual(count($result['#view']->result), 5);
+    $renderer->renderPlain($result);
+    $this->assertEqual(count($result['view_build']['#view']->result), 5);
 
     $result = views_embed_view('test_argument', 'default', 1);
-    $this->assertEqual(count($result['#view']->result), 1);
+    $renderer->renderPlain($result);
+    $this->assertEqual(count($result['view_build']['#view']->result), 1);
 
     $result = views_embed_view('test_argument', 'default', '1,2');
-    $this->assertEqual(count($result['#view']->result), 2);
+    $renderer->renderPlain($result);
+    $this->assertEqual(count($result['view_build']['#view']->result), 2);
 
     $result = views_embed_view('test_argument', 'default', '1,2', 'John');
-    $this->assertEqual(count($result['#view']->result), 1);
+    $renderer->renderPlain($result);
+    $this->assertEqual(count($result['view_build']['#view']->result), 1);
 
     $result = views_embed_view('test_argument', 'default', '1,2', 'John,George');
-    $this->assertEqual(count($result['#view']->result), 2);
+    $renderer->renderPlain($result);
+    $this->assertEqual(count($result['view_build']['#view']->result), 2);
   }
 
   /**
