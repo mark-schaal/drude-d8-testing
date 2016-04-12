@@ -7,7 +7,7 @@ web:
   image: blinkreaction/drupal-apache:2.2-stable
   volumes:
     # Project root folder mapping
-    - &project_root ".:/var/www"
+    - &project_root "./:/var/www"
   links:
     - cli
   environment:
