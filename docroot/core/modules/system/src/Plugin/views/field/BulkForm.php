@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\system\Plugin\views\field\BulkForm.
- */
-
 namespace Drupal\system\Plugin\views\field;
 
 use Drupal\Core\Cache\CacheableDependencyInterface;
@@ -465,7 +460,7 @@ class BulkForm extends FieldPluginBase implements CacheableDependencyInterface {
     }
 
     // An entity ID could be an arbitrary string (although they are typically
-    // numeric). JSON then Base64 encoding ensures the the bulk_form_key is
+    // numeric). JSON then Base64 encoding ensures the bulk_form_key is
     // safe to use in HTML, and that the key parts can be retrieved.
     $key = json_encode($key_parts);
     return base64_encode($key);

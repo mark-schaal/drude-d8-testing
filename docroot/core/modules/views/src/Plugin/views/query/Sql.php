@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\views\Plugin\views\query\Sql.
- */
-
 namespace Drupal\views\Plugin\views\query;
 
 use Drupal\Component\Utility\NestedArray;
@@ -805,9 +800,9 @@ class Sql extends QueryPluginBase {
    *   complex options, it is an array. The meaning of each element in the array is
    *   dependent on the $operator.
    * @param $operator
-   *   The comparison operator, such as =, <, or >=. It also accepts more complex
-   *   options such as IN, LIKE, or BETWEEN. Defaults to IN if $value is an array
-   *   = otherwise. If $field is a string you have to use 'formula' here.
+   *   The comparison operator, such as =, <, or >=. It also accepts more
+   *   complex options such as IN, LIKE, LIKE BINARY, or BETWEEN. Defaults to =.
+   *   If $field is a string you have to use 'formula' here.
    *
    * The $field, $value and $operator arguments can also be passed in with a
    * single DatabaseCondition object, like this:
@@ -1838,7 +1833,7 @@ class Sql extends QueryPluginBase {
 
         // SQLite does not have a ISO week substitution string, so it needs
         // special handling.
-        // @see http://en.wikipedia.org/wiki/ISO_week_date#Calculation
+        // @see http://wikipedia.org/wiki/ISO_week_date#Calculation
         // @see http://stackoverflow.com/a/15511864/1499564
         if ($format === '%W') {
           $expression = "((strftime('%j', date(strftime('%Y-%m-%d', $field" . $unixepoch . "), '-3 days', 'weekday 4')) - 1) / 7 + 1)";
