@@ -1,46 +1,60 @@
-# Drude Drupal 8 Testing
+# Drupal 8 powered by Drude (DrupalCon NOLA 2016)
 
-This is a sample vanila Drupal 8 installation preconfigured for use with Drude.  
+This is a sample vanila Drupal 8 installation preconfigured for use with Drude. 
 
-## Instructions (Mac, Windows, Linux)
+## Instructions (Mac, Windows, Linux/Debian-alike)
 
-**On Windows** you will need a Linux-type shell. Install [Babun](http://babun.github.io/) before proceeding and run all commands in it.  
-Instructions were not tested with other shells on Windows.
+### Drude environment setup (one-time setup per computer)
 
-1. Install `dsh` (Drude Shell)
+1. Copy files from the thumb drive
+
+2. Install babun (Windows only), virtualbox and vagrant.
+
+    Skip components you already have, though upgrading is highly recommended.
+    
+    IMPORTANT: On Windows all further commands must be run in Babun!
+
+3. Add a preloaded Drude base box (Mac and Windows only)
 
     ```
-    sudo curl -L https://raw.githubusercontent.com/blinkreaction/drude/master/bin/dsh  -o /usr/local/bin/dsh
+    vagrant box add --name drude <path/to/drude.box>
+    ```
+    
+    `<path/to/drude.box>` - file from the thumb drive
+
+4. Install `dsh` (Drude Shell)
+
+    ```
+    sudo curl -L https://raw.githubusercontent.com/blinkreaction/drude/master/bin/dsh  -o /usr/local/bin/dsh && \
     sudo chmod +x /usr/local/bin/dsh
     ```
 
-2. Create the `<Projects>` directory
-    
-    E.g. `~/Projects` on Mac and Linux, `c:\Projects` on Windows
-    
-    ```
-    mkdir Projects
-    cd Projects
-    ```
-
-3. Install Drude's prerequisites
-    
-    Mac and Windows: virtualbox, vagrant, boot2docker-vagrant
-    Linux: docker, docker-compose
+5. Run the following commnads in a folder designated for projects (e.g. ~/projects or c:\projects)
 
     ```
-    dsh install prerequisites
-    dsh install boot2docker
+    B2D_BRANCH=nola dsh install prerequisites && \
+    B2D_BRANCH=nola dsh install boot2docker
+    ```
+
+6. Make sure the VM can start (Mac and Windows only)
+
+    ```
+    vagrant up
     ```
     
-4. Clone this repo into the Projects directory
+    (Windows only - may have to run this 2 times in the very beginning)
+
+
+## Project setup
+
+1. Clone this repo into the designated folder used previously (e.g. ~/projects or c:\projects)
 
     ```
-    git clone https://github.com/blinkreaction/drude-d8-testing.git
-    cd drude-d8-testing
+    git clone -b nola https://github.com/blinkreaction/drude-d8-testing.git drupal8.drude && \
+    cd drupal8.drude
     ```
 
-5. Initialize the site
+2. Initialize the site
 
     This will initialize local settigns and install the site via drush
 
@@ -48,25 +62,10 @@ Instructions were not tested with other shells on Windows.
     dsh init
     ```
 
-6. Add `192.168.10.10  drupal8.drude` to your hosts file
+3. Add `192.168.10.10  drupal8.drude` to your hosts file (Windows only)
 
-7. Point your browser to
+4. Point your browser to
 
     ```
     http://drupal8.drude
     ```
-
-
-## Automation with 'dsh init'
-
-Site provisioning can be automated using `dsh init`, which calls the shell script in [.drude/scripts/drude-init.sh](.drude/scripts/drude-init.sh).  
-This script is meant to be modified per project. The one in this repo will give you a good starting point.
-
-Some common tasks that can be handled by the init script:
-
-- initialize local settings files (Docker Compose, Drupal, Behat, etc.)
-- import DB / perform a site install
-- compile Sass
-- run DB updates, revert features, clear cached, etc.
-- apply local settings (e.g. enable/disable modules, updates variable values)
-- run Behat tests available in the repo
