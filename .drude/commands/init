@@ -5,9 +5,9 @@ set -e
 
 #-------------------------- Settings --------------------------------
 
-# $PROJECT_ROOT is passed from dsh
+# $DRUDE_PATH is path to .drude folder. It is passed down from dsh to any custom command
 DOCROOT='docroot'
-DOCROOT_PATH=$PROJECT_ROOT/$DOCROOT
+DOCROOT_PATH="$DRUDE_PATH/$DOCROOT"
 # Set to the appropriate site directory
 SITE_DIRECTORY='default'
 SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
@@ -32,7 +32,7 @@ echo-yellow () { echo -e "${yellow}$1${NC}"; }
 if_failed ()
 {
 	if [ ! $? -eq 0 ]; then
-		if [[ "$1" == "" ]]; then msg="an error occured"; else msg="$1"; fi
+		if [[ "$1" == "" ]]; then msg="an error occurred"; else msg="$1"; fi
 		echo-red "$msg";
 		exit 1;
 	fi
@@ -44,8 +44,8 @@ if_failed ()
 # @param $2 destination file
 copy_settings_file()
 {
-    local source=${1}
-    local dest=${2}
+    local source="$1"
+    local dest="$2"
 
     if [[ ! -f $dest ]]; then
         echo-green "Copying ${dest}..."
@@ -65,7 +65,7 @@ init_settings ()
 {
     echo-green "Initializing local project configuration..."
     # Copy from settings templates
-    copy_settings_file "${PROJECT_ROOT}/.drude/drude-local.yml" "${PROJECT_ROOT}/docker-compose.yml"
+    copy_settings_file "${DRUDE_PATH}/.drude/drude-local.yml" "${DRUDE_PATH}/docker-compose.yml"
     copy_settings_file "${SITEDIR_PATH}/example.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
 }
 
@@ -81,8 +81,8 @@ file_permissions ()
 site_install ()
 {
     echo-green "Installing site..."
-    cd $DOCROOT_PATH && \
-    dsh exec drush8 si -y
+    cd "$DOCROOT_PATH" && \
+    dsh exec drush8 si -y --site-name="My Drupal 8 Site"
 }
 
 #-------------------------- END: Functions --------------------------------
@@ -90,19 +90,21 @@ site_install ()
 
 #-------------------------- Execution --------------------------------
 
+if [[ "$DRUDE_PATH" == "" ]]; then
+	echo-red "\$DRUDE_PATH is not set"
+	exit 1
+fi
+
 init_settings
 #file_permissions
-
 dsh reset
+
 # Give MySQL some time to start
-echo-green "Waiting 10s for MySQL to start..."; sleep 10
+echo-green "Waiting 10s for MySQL to start...";
+sleep 10
 
 time site_install
 
-echo-green "Add ${SITE_DOMAIN} to your hosts file (/etc/hosts), e.g.:"
-echo-green "192.168.10.10  ${SITE_DOMAIN}"
-echo-green "Alternatively configure wildcard DNS resolution and never edit the hosts file again! Instructions:"
-echo-green "https://github.com/blinkreaction/boot2docker-vagrant#dns"
 echo-green "Open http://${SITE_DOMAIN} in your browser to verify the setup."
 
 #-------------------------- END: Execution --------------------------------

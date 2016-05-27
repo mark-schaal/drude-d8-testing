@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage
-# dsh exec-url https://raw.githubusercontent.com/blinkreaction/drude-d8-testing/master/.drude/commands/init-web
+# dsh exec-url https://raw.githubusercontent.com/blinkreaction/drude-d8-testing/master/.drude/commands/web-init
 
 # Abort if anything fails
 set -e
@@ -26,4 +26,7 @@ _confirm ()
 }
 
 _confirm "Initialize Drude8 project in $(pwd)/drude-d8-testing?"
-git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && dsh init
+
+git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && \
+	cd drude-d8-testing && \
+	dsh init
