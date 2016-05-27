@@ -73,7 +73,6 @@ init_settings ()
 # Set file/folder permissions
 file_permissions ()
 {
-    echo-green "Setting file/folder permissions..."
     mkdir -p $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
     chmod 777 $DOCROOT_PATH/sites/$SITE_DIRECTORY/files
 }
@@ -81,7 +80,6 @@ file_permissions ()
 # Install site
 site_install ()
 {
-    echo-green "Installing site..."
     cd "$DOCROOT_PATH" && \
     dsh exec drush8 si -y --site-name="My Drupal 8 Site"
 }
@@ -96,22 +94,22 @@ if [[ "$DRUDE_PATH" == "" ]]; then
 	exit 1
 fi
 
-echo -e "${green_bg} Step 1 ${green}Initializing local project configuration...${NC}"
+echo -e "${green_bg} Step 1 ${NC}${green} Initializing local project configuration...${NC}"
 init_settings
 
-#--
+#echo-green "Setting file/folder permissions..."
 #file_permissions
 
-echo -e "${green_bg} Step 2 ${green}Recreating services...${NC}"
+echo -e "${green_bg} Step 2 ${NC}${green} Recreating services...${NC}"
 dsh reset
 # Give MySQL some time to start
 echo-green "Waiting 10s for MySQL to start...";
 sleep 10
 
-echo -e "${green_bg} Step 3 ${green}Installing site...${NC}"
+echo -e "${green_bg} Step 3 ${NC}${green} Installing site...${NC}"
 time site_install
 
 echo -e "${green_bg} DONE! ${NC}"
-echo -e "Open ${green}http://${SITE_DOMAIN}${NC} in your browser to verify the setup."
+echo -e "Open ${yellow}http://${SITE_DOMAIN}${NC} in your browser to verify the setup."
 
 #-------------------------- END: Execution --------------------------------

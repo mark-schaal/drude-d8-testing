@@ -6,6 +6,13 @@
 # Abort if anything fails
 set -e
 
+# Console colors
+red='\033[0;31m'
+green='\033[0;32m'
+green_bg='\033[42m'
+yellow='\033[1;33m'
+NC='\033[0m'
+
 # Yes/no confirmation dialog with an optional message
 # @param $1 confirmation message
 _confirm ()
@@ -26,6 +33,7 @@ _confirm ()
 }
 
 _confirm "Initialize Drude8 project in $(pwd)/drude-d8-testing?"
+echo -e "${green_bg} INIT ${NC}${green} Cloning repository...${NC}"
 
 #git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && \
 git clone -b develop git@github.com:achekulaev/drude-d8-testing.git && \
