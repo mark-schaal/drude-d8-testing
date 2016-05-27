@@ -101,7 +101,7 @@ init_settings
 #file_permissions
 
 echo -e "${green_bg} Step 2 ${NC}${green} Recreating services...${NC}"
-dsh reset
+dsh reset -f
 # Give MySQL some time to start
 echo-green "Waiting 10s for MySQL to start...";
 sleep 10
