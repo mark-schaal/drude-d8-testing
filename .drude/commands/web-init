@@ -32,7 +32,9 @@ _confirm ()
 	done
 }
 
-_confirm "Initialize Drude8 project in $(pwd)/drude-d8-testing?"
+echo "${green}Drude powered Drupal 8 project setup${NC}"
+echo "------------------------------------------------"
+_confirm "Initialize Drupal 8 project in $(pwd)/drude-d8-testing?"
 echo -e "${green_bg} INIT ${NC}${green} Cloning repository...${NC}"
 
 #git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && \
