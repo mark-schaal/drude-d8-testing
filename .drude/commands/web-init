@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage
-# dsh init-url https://raw.githubusercontent.com/blinkreaction/drude-d8-testing/master/.drude/scripts/drude-init.sh <directory>
+# dsh exec-url https://raw.githubusercontent.com/blinkreaction/drude-d8-testing/master/.drude/commands/init-web
 
 # Abort if anything fails
 set -e
@@ -12,7 +12,7 @@ _confirm ()
 {
 	while true; do
 		read -p "$1 [y/n]: " answer
-		case $answer in
+		case ${answer} in
 			[Yy]|[Yy][Ee][Ss] )
 				break
 				;;
@@ -25,6 +25,5 @@ _confirm ()
 	done
 }
 
-_confirm "Initialize project in the current directory?"
-git clone -b master https://github.com/blinkreaction/drude-d8-testing.git ./
-dsh init
+_confirm "Initialize Drude8 project in $(pwd)/drude-d8-testing?"
+git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && dsh init
