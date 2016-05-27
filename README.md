@@ -25,8 +25,8 @@ Instructions were not tested with other shells on Windows.
 
 3. Install Drude's prerequisites
     
-    Mac and Windows: virtualbox, vagrant, boot2docker-vagrant
-    Linux: docker, docker-compose
+    All operating systems: docker, docker-compose  
+    Mac and Windows additionally: virtualbox, vagrant, boot2docker-vagrant 
 
     ```
     dsh install prerequisites
@@ -42,7 +42,7 @@ Instructions were not tested with other shells on Windows.
 
 5. Initialize the site
 
-    This will initialize local settigns and install the site via drush
+    This will initialize local settings and install the site via drush
 
     ```
     dsh init
