@@ -27,6 +27,7 @@ _confirm ()
 
 _confirm "Initialize Drude8 project in $(pwd)/drude-d8-testing?"
 
-git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && \
+#git clone -b master https://github.com/blinkreaction/drude-d8-testing.git && \
+git clone -b develop git@github.com:achekulaev/drude-d8-testing.git && \
 	cd drude-d8-testing && \
 	dsh init
