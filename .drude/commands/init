@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+## Initialize Drude powered Drupal 8 site
+##
+## Usage: dsh init
+
 # Abort if anything fails
 set -e
 
