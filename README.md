@@ -1,6 +1,6 @@
 # Drude Drupal 8 Testing
 
-This is a sample vanila Drupal 8 installation preconfigured for use with Drude.  
+This is a sample vanilla Drupal 8 installation preconfigured for use with Drude.  
 
 ## Instructions (Mac, Windows, Linux)
 
