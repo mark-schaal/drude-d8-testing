@@ -1,4 +1,4 @@
-# Drude Drupal 8 Testing
+# Drude powered Drupal 8 Installation
 
 This is a sample vanilla Drupal 8 installation preconfigured for use with Drude.  
 
