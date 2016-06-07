@@ -114,8 +114,13 @@ init_settings
 #echo-green "Setting file/folder permissions..."
 #file_permissions
 
-echo -e "${green_bg} Step 2 ${NC}${green} Recreating services...${NC}"
-dsh reset -f
+if [[ $DOCKER_RUNNING == "true" ]]; then
+	echo -e "${green_bg} Step 2 ${NC}${green} Recreating services...${NC}"
+	dsh reset -f
+else
+	echo -e "${green_bg} Step 2 ${NC}${green} Creating services...${NC}"
+	dsh up
+fi
 echo "Waiting 10s for MySQL to start...";
 sleep 10
 
