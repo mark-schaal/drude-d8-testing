@@ -1,6 +1,6 @@
-# Drude Drupal 8 Testing
+# Drude powered Drupal 8 Installation
 
-This is a sample vanila Drupal 8 installation preconfigured for use with Drude.  
+This is a sample vanilla Drupal 8 installation preconfigured for use with Drude.  
 
 ## Instructions (Mac, Windows, Linux)
 
@@ -25,8 +25,8 @@ Instructions were not tested with other shells on Windows.
 
 3. Install Drude's prerequisites
     
-    Mac and Windows: virtualbox, vagrant, boot2docker-vagrant
-    Linux: docker, docker-compose
+    All operating systems: docker, docker-compose  
+    Mac and Windows additionally: virtualbox, vagrant, boot2docker-vagrant 
 
     ```
     dsh install prerequisites
@@ -42,13 +42,13 @@ Instructions were not tested with other shells on Windows.
 
 5. Initialize the site
 
-    This will initialize local settigns and install the site via drush
+    This will initialize local settings and install the site via drush
 
     ```
     dsh init
     ```
 
-6. Add `192.168.10.10  drupal8.drude` to your hosts file
+6. **On Windows** add `192.168.10.10  drupal8.drude` to your hosts file
 
 7. Point your browser to
 
@@ -59,14 +59,14 @@ Instructions were not tested with other shells on Windows.
 
 ## Automation with 'dsh init'
 
-Site provisioning can be automated using `dsh init`, which calls the shell script in [.drude/scripts/drude-init.sh](.drude/scripts/drude-init.sh).  
-This script is meant to be modified per project. The one in this repo will give you a good starting point.
+Site provisioning can be automated using `dsh init`, which calls script [.drude/commands/init](.drude/commands/init).  
+This script is meant to be modified per project. The one in this repo will give you a good example of advanced init script.
 
 Some common tasks that can be handled by the init script:
 
-- initialize local settings files (Docker Compose, Drupal, Behat, etc.)
-- import DB / perform a site install
+- initialize local settings files for Docker Compose, Drupal, Behat, etc.
+- import DB or perform a site install
 - compile Sass
-- run DB updates, revert features, clear cached, etc.
-- apply local settings (e.g. enable/disable modules, updates variable values)
-- run Behat tests available in the repo
+- run DB updates, revert features, clear caches, etc.
+- enable/disable modules, update variables values
+- run Behat tests
