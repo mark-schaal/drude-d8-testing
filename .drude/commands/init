@@ -95,7 +95,7 @@ file_permissions ()
 site_install ()
 {
     cd "$DOCROOT_PATH" && \
-    dsh exec drush8 si -y --site-name="My Drupal 8 Site"
+    dsh exec drush si -y --site-name="My Drupal 8 Site"
 }
 
 #-------------------------- END: Functions --------------------------------
