@@ -121,7 +121,8 @@ else
 	echo -e "${green_bg} Step 2 ${NC}${green} Creating services...${NC}"
 	dsh up
 fi
-echo "Waiting 10s for MySQL to start...";
+
+echo "Waiting 10s for MySQL to initialize...";
 sleep 10
 
 echo -e "${green_bg} Step 3 ${NC}${green} Installing site...${NC}"
