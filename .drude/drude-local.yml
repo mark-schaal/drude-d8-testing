@@ -9,6 +9,8 @@ services:
     extends:
       file: .drude/drude-services.yml
       service: web
+    depends_on:
+      - cli
     environment:
       - VIRTUAL_HOST=drupal8.drude
 
