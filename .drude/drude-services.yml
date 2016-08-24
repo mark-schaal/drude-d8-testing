@@ -31,9 +31,9 @@ services:
       # Project root folder mapping
       - *project_root
       # PHP FPM configuration overrides
-      - "./.drude/etc/php5/php.ini:/etc/php5/fpm/conf.d/z_php.ini"
+      - "./etc/php5/php.ini:/etc/php5/fpm/conf.d/z_php.ini"
       # PHP CLI configuration overrides
-      - "./.drude/etc/php5/php-cli.ini:/etc/php5/cli/conf.d/z_php.ini"
+      - "./etc/php5/php-cli.ini:/etc/php5/cli/conf.d/z_php.ini"
       # Host home directory mapping (for SSH keys and ther credentials).
       # We try to map both options (b2d and Linux). The startup.sh script in cli container will decide which one to use.
       - /.home:/.home-b2d  # boot2docker-vagrant
